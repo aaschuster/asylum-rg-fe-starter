@@ -88,7 +88,7 @@ function RenderLandingPage(props) {
         <div className="bottom-section">
           <h2>Systemic Disparity Insights</h2>
           <div className="bottom-section-stats-container">
-            <div>
+            <div className="data-point-container first-data-point-container">
               <h3>36%</h3>
               <p>
                 By the end of the Trump administration, the average asylum
@@ -97,7 +97,7 @@ function RenderLandingPage(props) {
               </p>
             </div>
 
-            <div>
+            <div className="data-point-container second-data-point-container">
               <h3>5%</h3>
               <p>
                 The New York asylum office grant rate dropped to 5 percent in
@@ -105,7 +105,7 @@ function RenderLandingPage(props) {
               </p>
             </div>
 
-            <div>
+            <div className="data-point-container third-data-point-container">
               <h3>6x Lower</h3>
               <p>
                 Between fiscal year 2017 and 2020, the New York asylum office’s
