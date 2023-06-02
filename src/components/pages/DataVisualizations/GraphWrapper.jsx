@@ -24,7 +24,6 @@ function GraphWrapper(props) {
   }
   let map_to_render;
   const mainUrl = 'https://hrf-asylum-be-b.herokuapp.com/cases/';
-  let urlTail = 'fiscalSummary';
   if (!office) {
     switch (view) {
       case 'time-series':
@@ -35,7 +34,6 @@ function GraphWrapper(props) {
         break;
       case 'citizenship':
         map_to_render = <CitizenshipMapAll />;
-        urlTail = 'citizenshipSummary';
         break;
       default:
         break;
@@ -47,7 +45,6 @@ function GraphWrapper(props) {
         break;
       case 'citizenship':
         map_to_render = <CitizenshipMapSingleOffice office={office} />;
-        urlTail = 'citizenshipSummary';
         break;
       default:
         break;
@@ -81,33 +78,38 @@ function GraphWrapper(props) {
     
     */
 
-    const { data } = await axios.get(`${mainUrl}/fiscalSummary`, {
-      params: {
-        from: years[0],
-        to: years[1],
-        office: office === 'all' ? null : office,
-      },
-    });
-
-    const citizenshipResults = await axios.get(
-      `${mainUrl}/citizenshipSummary`,
-      {
+    try {
+      const { data } = await axios.get(`${mainUrl}/fiscalSummary`, {
         params: {
           from: years[0],
           to: years[1],
           office: office === 'all' ? null : office,
         },
-      }
-    );
+      });
 
-    data.citizenshipResults = citizenshipResults.data;
+      const citizenshipResults = await axios.get(
+        `${mainUrl}/citizenshipSummary`,
+        {
+          params: {
+            from: years[0],
+            to: years[1],
+            office: office === 'all' ? null : office,
+          },
+        }
+      );
 
-    stateSettingCallback(view, office, [data]);
+      data.citizenshipResults = citizenshipResults.data;
+
+      stateSettingCallback(view, office, [data]);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   const clearQuery = (view, office) => {
     dispatch(resetVisualizationQuery(view, office));
   };
+
   return (
     <div
       className="map-wrapper-container"
