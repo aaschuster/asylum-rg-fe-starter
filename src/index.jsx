@@ -7,16 +7,19 @@ import {
   Switch,
 } from 'react-router-dom';
 import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
+import { useAuth0 } from '@auth0/auth0-react';
 
 import 'antd/dist/antd.less';
 import { NotFoundPage } from './components/pages/NotFound';
 import { LandingPage } from './components/pages/Landing';
+import { ProfilePage } from './components/pages/Profile';
 
 import { FooterContent, SubFooter } from './components/Layout/Footer';
 import { HeaderContent } from './components/Layout/Header';
 
 // import { TablePage } from './components/pages/Table';
 
+import LoadingComponent from './components/common/LoadingComponent';
 import { Layout } from 'antd';
 import GraphsContainer from './components/pages/DataVisualizations/GraphsContainer';
 import { Provider } from 'react-redux';
@@ -41,6 +44,11 @@ ReactDOM.render(
 );
 
 export function App() {
+  const { isLoading } = useAuth0();
+
+  if (isLoading)
+    return <LoadingComponent message="Waiting for Auth0 to load" />;
+
   const { Footer, Header } = Layout;
   return (
     <Layout>
@@ -57,6 +65,7 @@ export function App() {
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route path="/graphs" component={GraphsContainer} />
+        <Route path="/profile" component={ProfilePage} />
         <Route component={NotFoundPage} />
       </Switch>
       <Footer
