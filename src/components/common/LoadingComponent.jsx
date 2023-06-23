@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import '../../styles/LoadingComponent.less';
+
 function LoadingComponent(props) {
   const { message } = props;
 
-  return <div>{message}</div>;
+  return <div className="message">{message}</div>;
 }
 
 export default LoadingComponent;

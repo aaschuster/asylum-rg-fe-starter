@@ -46,9 +46,6 @@ ReactDOM.render(
 export function App() {
   const { isLoading } = useAuth0();
 
-  if (isLoading)
-    return <LoadingComponent message="Waiting for Auth0 to load" />;
-
   const { Footer, Header } = Layout;
   return (
     <Layout>
@@ -62,12 +59,16 @@ export function App() {
       >
         <HeaderContent />
       </Header>
-      <Switch>
-        <Route path="/" exact component={LandingPage} />
-        <Route path="/graphs" component={GraphsContainer} />
-        <Route path="/profile" component={ProfilePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
+      {isLoading ? (
+        <LoadingComponent message="Waiting for Auth0 to load..." />
+      ) : (
+        <Switch>
+          <Route path="/" exact component={LandingPage} />
+          <Route path="/graphs" component={GraphsContainer} />
+          <Route path="/profile" component={ProfilePage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      )}
       <Footer
         style={{
           backgroundColor: primary_accent_color,
