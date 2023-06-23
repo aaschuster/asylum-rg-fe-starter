@@ -5,10 +5,13 @@ import Logo from '../../styles/Images/WhiteLogo.png';
 import { colors } from '../../styles/data_vis_colors';
 import AuthNav from '../common/auth0/AuthNav';
 import '../../styles/Header.less';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const { primary_accent_color } = colors;
 
 function HeaderContent() {
+  const { isAuthenticated } = useAuth0();
+
   return (
     <div
       style={{
@@ -30,9 +33,16 @@ function HeaderContent() {
         <Link to="/graphs" style={{ color: '#E2F0F7', paddingRight: '75px' }}>
           Graphs
         </Link>
-        <Link to="/profile" style={{ color: '#E2F0F7', paddingRight: '75px ' }}>
-          Profile
-        </Link>
+        {isAuthenticated ? (
+          <Link
+            to="/profile"
+            style={{ color: '#E2F0F7', paddingRight: '75px ' }}
+          >
+            Profile
+          </Link>
+        ) : (
+          <></>
+        )}
         <AuthNav
           className="link"
           style={{ color: '#E2F0F7', paddingRight: '75px ' }}
