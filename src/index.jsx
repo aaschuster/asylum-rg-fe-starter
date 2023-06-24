@@ -13,6 +13,7 @@ import 'antd/dist/antd.less';
 import { NotFoundPage } from './components/pages/NotFound';
 import { LandingPage } from './components/pages/Landing';
 import { ProfilePage } from './components/pages/Profile';
+import ProtectedRoute from './auth/protected-route';
 
 import { FooterContent, SubFooter } from './components/Layout/Footer';
 import { HeaderContent } from './components/Layout/Header';
@@ -64,8 +65,8 @@ export function App() {
       ) : (
         <Switch>
           <Route path="/" exact component={LandingPage} />
-          <Route path="/graphs" component={GraphsContainer} />
-          <Route path="/profile" component={ProfilePage} />
+          <ProtectedRoute path="/graphs" component={GraphsContainer} />
+          <ProtectedRoute path="/profile" component={ProfilePage} />
           <Route component={NotFoundPage} />
         </Switch>
       )}
